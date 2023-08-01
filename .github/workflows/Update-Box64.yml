@@ -60,7 +60,7 @@ jobs:
       - name: Build and Package
         run: |
           export DIRECTORY="$GITHUB_WORKSPACE"
-          ./create-deb.sh || true
+          ./create-deb.sh
           cd $DIRECTORY/debian
           rm $DIRECTORY/debian/Packages || echo "Failed to remove packages file"
           rm $DIRECTORY/debian/Packages.gz || echo "Failed to remove packages.gz file"
