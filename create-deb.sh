@@ -78,7 +78,7 @@ for target in ${targets[@]}; do
   echo 'Restarting systemd-binfmt...'
   systemctl restart systemd-binfmt || true" > postinstall-pak || error "Failed to create postinstall-pak!"
 
-  conflict_list="qemu-user-static"
+  conflict_list="qemu-user-static, box64"
   for value in "${targets[@]}"; do
     if [[ $value != $target ]]; then
       [[ $value == "ARM64" ]] && value="GENERIC_ARM"
