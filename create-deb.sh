@@ -41,7 +41,7 @@ echo "box64 is not the latest version, compiling now."
 echo $commit > $DIRECTORY/commit.txt
 echo "Wrote commit to commit.txt file for use during the next compilation."
 
-targets=(ARM64 ANDROID RPI4ARM64 RPI3ARM64 TEGRAX1 RK3399)
+targets=(GENERIC_ARM GENERIC_ARM_PAGE16K ANDROID RPI4ARM64 RPI3ARM64 TEGRAX1 RK3399)
 
 for target in ${targets[@]}; do
 
@@ -51,6 +51,10 @@ for target in ${targets[@]}; do
   sed -i "s/NOT _x86 AND NOT _x86_64/true/g" ../CMakeLists.txt
   if [[ $target == "ANDROID" ]]; then
     cmake .. -DBAD_SIGNAL=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
+  elif [[ $target == "GENERIC_ARM_PAGE16K" ]]; then
+    cmake .. -DARM64=1 -DPAGE16K=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
+  elif [[ $target == "GENERIC_ARM" ]]; then
+    cmake .. -DARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
   else
     cmake .. -D$target=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
   fi
@@ -81,15 +85,10 @@ for target in ${targets[@]}; do
   conflict_list="qemu-user-static, box64"
   for value in "${targets[@]}"; do
     if [[ $value != $target ]]; then
-      [[ $value == "ARM64" ]] && value="GENERIC_ARM"
       conflict_list+=", box64-$(echo $value | tr '[:upper:]' '[:lower:]' | tr _ - | sed -r 's/ /, /g')"
     fi
   done
-  if [[ $target == "ARM64" ]]; then
-    sudo checkinstall -y -D --pkgversion="$DEBVER" --arch="arm64" --provides="box64" --conflicts="$conflict_list" --pkgname="box64-generic-arm" --install="no" make install || error "Checkinstall failed to create a deb package."
-  else
-    sudo checkinstall -y -D --pkgversion="$DEBVER" --arch="arm64" --provides="box64" --conflicts="$conflict_list" --pkgname="box64-$target" --install="no" make install || error "Checkinstall failed to create a deb package."
-  fi
+  sudo checkinstall -y -D --pkgversion="$DEBVER" --arch="arm64" --provides="box64" --conflicts="$conflict_list" --pkgname="box64-$target" --install="no" make install || error "Checkinstall failed to create a deb package."
 
   cd $DIRECTORY
   mkdir -p debian
