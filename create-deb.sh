@@ -70,7 +70,7 @@ for target in ${targets[@]}; do
 
   get-box64-version ver  || error "Failed to get box64 version!"
   get-box64-version commit || error "Failed to get box64 commit!"
-  DEBVER="$(echo "$box64VER+$(date +"%F" | sed 's/-//g').$box64COMMIT")" || error "Failed to set debver variable."
+  DEBVER="$(echo "$box64VER+$(date -u +"%Y%m%dT%H%M%S").$box64COMMIT")" || error "Failed to set debver variable."
 
   mkdir doc-pak || error "Failed to create doc-pak dir."
   cp ../docs/README.md ./doc-pak || warning "Failed to add README to docs"
