@@ -1,21 +1,4 @@
 Package: box64-android
-Version: 0.2.7+20240125T062720.0004f19-1
-Architecture: arm64
-Maintainer: root@6e7ea97d5d06
-Installed-Size: 65580
-Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1, box64-rk3399
-Provides: box64
-Filename: ./box64-android_0.2.7+20240125T062720.0004f19-1_arm64.deb
-Size: 9303608
-MD5sum: 2c6dbe887002811d5fa0dc0cbea13481
-SHA1: 876f805de5c0cb3b79578afd608c494dc637058a
-SHA256: d0ddbf7af94136f250ebc9b052b62a9d880a94e89b3971995260214059f6052b
-Section: checkinstall
-Priority: extra
-Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
- Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
-
-Package: box64-android
 Version: 0.2.7+20240126T062656.0ee5174-1
 Architecture: arm64
 Maintainer: root@33ef548fb0b9
@@ -66,18 +49,18 @@ Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
  Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
 
-Package: box64-generic-arm
-Version: 0.2.7+20240125T062002.0004f19-1
+Package: box64-android
+Version: 0.2.7+20240129T062551.35a3248-1
 Architecture: arm64
-Maintainer: root@6e7ea97d5d06
-Installed-Size: 65588
-Conflicts: qemu-user-static, box64, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1, box64-rk3399
+Maintainer: root@840fe0033712
+Installed-Size: 65644
+Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1, box64-rk3399
 Provides: box64
-Filename: ./box64-generic-arm_0.2.7+20240125T062002.0004f19-1_arm64.deb
-Size: 9275236
-MD5sum: 0118f360cf76e2f629cb9d2fcf74c649
-SHA1: deddcb6f7978498ea9fe999f2005fc4ab686ccea
-SHA256: 06a690893025cc5eb94c0c600dec35ffced12456ae28c35c61193fcd4f75409c
+Filename: ./box64-android_0.2.7+20240129T062551.35a3248-1_arm64.deb
+Size: 9307804
+MD5sum: 01c0aec75b8876ea16fe59572efa89c2
+SHA1: b6e38363456eb57c2abb97a36d1392636c1d2dde
+SHA256: 0aa348ba3a889ba88cbd6005bcdb19150493e5db76b03fc14560d65a44cf6eb6
 Section: checkinstall
 Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
@@ -134,18 +117,18 @@ Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
  Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
 
-Package: box64-generic-arm-page16k
-Version: 0.2.7+20240125T062337.0004f19-1
+Package: box64-generic-arm
+Version: 0.2.7+20240129T061838.35a3248-1
 Architecture: arm64
-Maintainer: root@6e7ea97d5d06
-Installed-Size: 65564
-Conflicts: qemu-user-static, box64, box64-generic-arm, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1, box64-rk3399
+Maintainer: root@840fe0033712
+Installed-Size: 65640
+Conflicts: qemu-user-static, box64, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1, box64-rk3399
 Provides: box64
-Filename: ./box64-generic-arm-page16k_0.2.7+20240125T062337.0004f19-1_arm64.deb
-Size: 9286020
-MD5sum: b247d5932285e9ac44a24f738c7679ab
-SHA1: 5a2aebcec1f5a1e2d0a39c832c7c1785ea72a4b3
-SHA256: d3c3008dfdf9319bc2a5388b9624374eeb6f8a297f53f49aed0961fa0ae00c90
+Filename: ./box64-generic-arm_0.2.7+20240129T061838.35a3248-1_arm64.deb
+Size: 9317108
+MD5sum: 7519ffc167e9ea6944d9f200ffa1af1a
+SHA1: dab4061e35196f199bcf3e2d907ab2abfff28d36
+SHA256: dca779e9fac6abfb29580e8105670b609ddbef518436b9312bd1d77443cd442c
 Section: checkinstall
 Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
@@ -202,18 +185,18 @@ Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
  Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
 
-Package: box64-rk3399
-Version: 0.2.7+20240125T064204.0004f19-1
+Package: box64-generic-arm-page16k
+Version: 0.2.7+20240129T062215.35a3248-1
 Architecture: arm64
-Maintainer: root@6e7ea97d5d06
-Installed-Size: 65280
-Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1
+Maintainer: root@840fe0033712
+Installed-Size: 65632
+Conflicts: qemu-user-static, box64, box64-generic-arm, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1, box64-rk3399
 Provides: box64
-Filename: ./box64-rk3399_0.2.7+20240125T064204.0004f19-1_arm64.deb
-Size: 9162936
-MD5sum: ddcc49e918578dff34d85c0676e6274b
-SHA1: 7bf2de0e8f510f88b1c2bb4cc5117350971e9665
-SHA256: 7f5db16c2e3bdd7293dbe85181e442ae7df2261425a975ab562e0d2a8f2eafbf
+Filename: ./box64-generic-arm-page16k_0.2.7+20240129T062215.35a3248-1_arm64.deb
+Size: 9302972
+MD5sum: 88974033716a5e528dbb92e182729dea
+SHA1: 2def4ba11839080d3317a49f4399c755d4d5551b
+SHA256: 4a0ff452613b821c059b8daff7a4fbdff6d040509f1b735f170727d4b7d66f59
 Section: checkinstall
 Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
@@ -270,18 +253,18 @@ Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
  Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
 
-Package: box64-rpi3arm64
-Version: 0.2.7+20240125T063446.0004f19-1
+Package: box64-rk3399
+Version: 0.2.7+20240129T064025.35a3248-1
 Architecture: arm64
-Maintainer: root@6e7ea97d5d06
-Installed-Size: 65272
-Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-tegrax1, box64-rk3399
+Maintainer: root@840fe0033712
+Installed-Size: 65352
+Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-tegrax1
 Provides: box64
-Filename: ./box64-rpi3arm64_0.2.7+20240125T063446.0004f19-1_arm64.deb
-Size: 9172776
-MD5sum: 39f98cc60f6e0e0a0783a6cbd9df90a0
-SHA1: 96234456663d688d7dc9b1a85259a270fd758141
-SHA256: 05290f331c326513bdcc85f9f78fd268f0bfad2339afaf089253c181b4bc669f
+Filename: ./box64-rk3399_0.2.7+20240129T064025.35a3248-1_arm64.deb
+Size: 9187144
+MD5sum: 21e7d7c710c6691723173ecb9bdf7a86
+SHA1: 50e90d3c0b189232a4bf3748c9a9e12f8eeaa110
+SHA256: 08982d760553126f90fd528bb3c12aff2b184cb8f159240508e62716ce1b0865
 Section: checkinstall
 Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
@@ -338,18 +321,18 @@ Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
  Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
 
-Package: box64-rpi4arm64
-Version: 0.2.7+20240125T063104.0004f19-1
+Package: box64-rpi3arm64
+Version: 0.2.7+20240129T063307.35a3248-1
 Architecture: arm64
-Maintainer: root@6e7ea97d5d06
-Installed-Size: 65424
-Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi3arm64, box64-tegrax1, box64-rk3399
+Maintainer: root@840fe0033712
+Installed-Size: 65364
+Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-tegrax1, box64-rk3399
 Provides: box64
-Filename: ./box64-rpi4arm64_0.2.7+20240125T063104.0004f19-1_arm64.deb
-Size: 9174280
-MD5sum: 3527ae3f8b7a8b3ca3819a11c8d978ee
-SHA1: 0b28d206ea636836a623271c5196e38630717643
-SHA256: a779064baff9b3536c74bcfd38378d6446dd0e5b63fa74ab1c59d73ca312d0ff
+Filename: ./box64-rpi3arm64_0.2.7+20240129T063307.35a3248-1_arm64.deb
+Size: 9157528
+MD5sum: 18736a6c693161e7fdeb7b043fe8563f
+SHA1: 687e2c9983f88b1d2e79dce6a2d9fdae14e7e22a
+SHA256: 61c73ec731b41037c1cfa5b46b3046a732bf5bbb17a9f653d66f6734a797ca02
 Section: checkinstall
 Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
@@ -406,18 +389,18 @@ Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
  Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
 
-Package: box64-tegrax1
-Version: 0.2.7+20240125T063829.0004f19-1
+Package: box64-rpi4arm64
+Version: 0.2.7+20240129T062929.35a3248-1
 Architecture: arm64
-Maintainer: root@6e7ea97d5d06
-Installed-Size: 65384
-Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-rk3399
+Maintainer: root@840fe0033712
+Installed-Size: 65460
+Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi3arm64, box64-tegrax1, box64-rk3399
 Provides: box64
-Filename: ./box64-tegrax1_0.2.7+20240125T063829.0004f19-1_arm64.deb
-Size: 9168244
-MD5sum: 42001f98fb167039bb6f9c37d2863e70
-SHA1: 47706fee2687b76d3e48ba4a46dd0b079134442f
-SHA256: 0e5f83c9f824bb4dc09302b725c79de44ed832023d50aa950c903e40c7a1b7aa
+Filename: ./box64-rpi4arm64_0.2.7+20240129T062929.35a3248-1_arm64.deb
+Size: 9187060
+MD5sum: 6d3223bc4d0c4231481fe7ab425d294f
+SHA1: b4eeb36001f94ac3927fae6ba42e9767829b98a2
+SHA256: cdc7c12c67b90558efe0ac6db88a7caf7acb10a6d9d276e6ba755405265216b8
 Section: checkinstall
 Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
@@ -469,6 +452,23 @@ Size: 9186632
 MD5sum: 00a06b3f00de76f84f58ca9933417884
 SHA1: e24ddd088ca790c7cce56adddebc9569a8d3ddea
 SHA256: 88ad17eac6554e233766d9e3d03db0f1141a586f368ae00473141b8de9650f54
+Section: checkinstall
+Priority: extra
+Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
+ Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
+
+Package: box64-tegrax1
+Version: 0.2.7+20240129T063648.35a3248-1
+Architecture: arm64
+Maintainer: root@840fe0033712
+Installed-Size: 65500
+Conflicts: qemu-user-static, box64, box64-generic-arm, box64-generic-arm-page16k, box64-android, box64-rpi4arm64, box64-rpi3arm64, box64-rk3399
+Provides: box64
+Filename: ./box64-tegrax1_0.2.7+20240129T063648.35a3248-1_arm64.deb
+Size: 9170492
+MD5sum: 6d153e0ebad824a512749597bd27c6f6
+SHA1: 085d75f906db9b43de7bda2618f84218feb88052
+SHA256: 4566335559f699a1af1d8271f76ec42cba3c89af05e20a21ec3cde932d781c44
 Section: checkinstall
 Priority: extra
 Description: Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)
