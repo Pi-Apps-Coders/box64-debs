@@ -41,7 +41,7 @@ echo "box64 is not the latest version, compiling now."
 echo $commit > $DIRECTORY/commit.txt
 echo "Wrote commit to commit.txt file for use during the next compilation."
 
-targets=(GENERIC_ARM GENERIC_ARM_PAGE16K ANDROID RPI4ARM64 RPI3ARM64 TEGRAX1 RK3399)
+targets=(GENERIC_ARM GENERIC_ARM_PAGE16K ANDROID RPI4ARM64 RPI3ARM64 TEGRAX1 TEGRA_T194 TEGRA_T234 RK3399)
 
 for target in ${targets[@]}; do
 
@@ -55,6 +55,10 @@ for target in ${targets[@]}; do
     cmake .. -DARM64=1 -DPAGE16K=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
   elif [[ $target == "GENERIC_ARM" ]]; then
     cmake .. -DARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
+  elif [[ $target == "TEGRA_T194" ]]; then
+    cmake .. -D$target=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-13 -DARM_DYNAREC=ON || error "Failed to run cmake."
+  elif [[ $target == "TEGRA_T294" ]]; then
+    cmake .. -D$target=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-13 -DARM_DYNAREC=ON || error "Failed to run cmake."
   else
     cmake .. -D$target=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
   fi
