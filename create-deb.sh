@@ -60,7 +60,7 @@ for target in ${targets[@]}; do
 
   function get-box64-version() {
     if [[ $1 == "ver" ]]; then
-      export box64VER="$(qemu-aarch64-static ./box64 -v | cut -c21-25)"
+      export box64VER="$(cat ../src/box64version.h | sed -n -e 's/^.*BOX64_MAJOR //p')"."$(cat ../src/box64version.h | sed -n -e 's/^.*BOX64_MINOR //p')"."$(cat ../src/box64version.h | sed -n -e 's/^.*BOX64_REVISION //p')"
     elif [[ $1 == "commit" ]]; then
       export box64COMMIT="$commit"
     fi
