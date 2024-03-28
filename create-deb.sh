@@ -86,7 +86,7 @@ for target in ${targets[@]}; do
       conflict_list+=", box64-$(echo $value | tr '[:upper:]' '[:lower:]' | tr _ - | sed -r 's/ /, /g')"
     fi
   done
-  sudo checkinstall -y -D --pkgversion="$DEBVER" --arch="arm64" --provides="box64" --conflicts="$conflict_list" --pkgname="box64-$target" --install="no" make install || error "Checkinstall failed to create a deb package."
+  sudo checkinstall -y -D --maintainer="theofficialgman <dofficialgman@gmail.com>" --pkgversion="$DEBVER" --arch="arm64" --provides="box64" --conflicts="$conflict_list" --pkgname="box64-$target" --install="no" make install || error "Checkinstall failed to create a deb package."
 
   cd $DIRECTORY
   mkdir -p debian
@@ -97,7 +97,7 @@ done
 # only keep last 4 debs for each target
 # keeps github pages builds fast and below 1GB suggested limit
 cd $DIRECTORY
-ls ./debian/box64-*.deb | sort -t '+' -k 2 | head -n -28 | xargs -r rm
+ls ./debian/box64-*.deb | sort -t '+' -k 2 | head -n -24 | xargs -r rm
 
 rm -rf $DIRECTORY/box64
 
