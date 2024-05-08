@@ -76,9 +76,22 @@ for target in ${targets[@]}; do
   cp ../docs/USAGE.md ./doc-pak || error "Failed to add USAGE to docs"
   cp ../LICENSE ./doc-pak || error "Failed to add LICENSE to docs"
   echo "Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM (host system needs to be 64bit little-endian)">description-pak || error "Failed to create description-pak."
-  echo "#!/bin/bash
-  echo 'Restarting systemd-binfmt...'
-  systemctl restart systemd-binfmt || true" > postinstall-pak || error "Failed to create postinstall-pak!"
+  echo '#!/bin/bash
+warning() { #yellow text
+  echo -e "\e[93m\e[5m◢◣\e[25m WARNING: $1\e[0m" 1>&2
+}
+# do not touch binfmts inside a container
+if command -v systemd-detect-virt >/dev/null; then
+  if systemd-detect-virt --quiet --container ; then
+    warning "Registering a binfmt cannot be done in a container. This means Box64 will not be automatically summoned to run x86_64 code, breaking some apps that use it including Steam."
+    exit 0
+  fi
+fi
+if grep -zqs ^container= /proc/1/environ; then
+  warning "Registering a binfmt cannot be done in a container. This means Box64 will not be automatically summoned to run x86_64 code, breaking some apps that use it including Steam."
+  exit 0
+fi
+systemctl restart systemd-binfmt || warning "Restarting systemd-binfmt failed. This means Box64 will not be automatically summoned to run x86_64 code, breaking some apps that use it including Steam."' > postinstall-pak || error "Failed to create postinstall-pak!"
 
   conflict_list="qemu-user-static, box64, box64-generic-arm-page16k"
   for value in "${targets[@]}"; do
