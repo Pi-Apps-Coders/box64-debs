@@ -1,0 +1,62 @@
+name: Update-box64
+
+# Controls when the workflow will run
+on:
+  schedule:
+     - cron: '0 6 * * *'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  update-box64:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # import gpg key
+      - name: Import GPG key
+        id: import_gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+      
+      - name: Install dependencies and build in dockerfile
+        uses: docker://ubuntu:18.04
+        with:
+          entrypoint: "/bin/bash"
+          args: /github/workspace/.github/workflows/install-dependencies-and-build.sh
+
+      - name: Update Debian Repository
+        run: |
+          # list gpg keys
+          gpg -K
+          # rebuild debian repo
+          cd $GITHUB_WORKSPACE/debian
+          rm $GITHUB_WORKSPACE/debian/Packages || echo "Failed to remove packages file"
+          rm $GITHUB_WORKSPACE/debian/Packages.gz || echo "Failed to remove packages.gz file"
+          rm $GITHUB_WORKSPACE/debian/Release || echo "Failed to remove release file"
+          rm $GITHUB_WORKSPACE/debian/Release.gpg || echo "Failed to remove release.gpg file"
+          rm $GITHUB_WORKSPACE/debian/InRelease || echo "Failed to remove inrelease file"
+          dpkg-scanpackages --multiversion . > Packages
+          gzip -k -f Packages
+          apt-ftparchive release . > Release
+          gpg --default-key "78193853+Pi-Apps-Coders@users.noreply.github.com" --batch --pinentry-mode="loopback" --passphrase="${{ secrets.PASSPHRASE }}" -abs -o - Release > Release.gpg || error "failed to sign Release.gpg with gpg "
+          gpg --default-key "78193853+Pi-Apps-Coders@users.noreply.github.com" --batch --pinentry-mode="loopback" --passphrase="${{ secrets.PASSPHRASE }}" --clearsign -o - Release > InRelease || error "failed to sign InRelease with gpg"
+
+      - name: Upload
+        run: |
+          if [[ -f exited_successfully.txt ]]; then
+            rm exited_successfully.txt
+            exit 0
+          fi
+          cd $GITHUB_WORKSPACE
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          bash -c "git add . && git commit -m 'Update box64 to commit $(cat commit.txt)'" || true
+          git push
