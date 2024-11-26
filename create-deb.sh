@@ -99,7 +99,7 @@ systemctl restart systemd-binfmt || warning "Restarting systemd-binfmt failed. T
       conflict_list+=", box64-$(echo $value | tr '[:upper:]' '[:lower:]' | tr _ - | sed -r 's/ /, /g')"
     fi
   done
-  sudo checkinstall -y -D --maintainer="theofficialgman <dofficialgman@gmail.com>" --pkgversion="$DEBVER" --arch="arm64" --provides="box64" --conflicts="$conflict_list" --pkgname="box64-$target" --install="no" make install || error "Checkinstall failed to create a deb package."
+  sudo checkinstall -y -D --maintainer="dofficialgman@gmail.com" --pkgversion="$DEBVER" --arch="arm64" --provides="box64" --conflicts="$conflict_list" --pkgname="box64-$target" --install="no" make install || error "Checkinstall failed to create a deb package."
 
   cd $DIRECTORY
   mkdir -p debian
