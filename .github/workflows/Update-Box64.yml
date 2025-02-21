@@ -11,7 +11,7 @@ on:
 jobs:
   update-box64:
     # The type of runner that the job will run on
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -27,7 +27,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
       
       - name: Install dependencies and build in dockerfile
-        uses: docker://ubuntu:18.04
+        uses: docker://arm64v8/ubuntu:18.04
         with:
           entrypoint: "/bin/bash"
           args: /github/workspace/.github/workflows/install-dependencies-and-build.sh
