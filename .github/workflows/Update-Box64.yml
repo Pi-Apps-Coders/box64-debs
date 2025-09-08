@@ -4,7 +4,7 @@ name: Update-box64
 on:
   schedule:
      - cron: '0 1 * * *'
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows running this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -15,7 +15,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it
       - uses: actions/checkout@v4
 
       # Import GPG key
@@ -31,52 +31,51 @@ jobs:
         run: |
           rm -f $GITHUB_WORKSPACE/debian/*.deb
       
-      # Install dependencies, clone box64, build, and create .debs (inlined from removed scripts)
-      - name: Install dependencies and build in Docker
-        uses: docker://arm64v8/ubuntu:18.04
-        with:
-          entrypoint: "/bin/bash"
-          args: |
-            set -e
-            # Install build dependencies
-            apt-get update
-            apt-get install -y gcc-8 cmake git checkinstall binutils build-essential
-            # Configure git
-            git config --global --add safe.directory /github/workspace
-            # Clone box64 and get latest commit
-            cd /github/workspace
-            git clone https://github.com/ptitSeb/box64.git box64-src
-            cd box64-src
-            LATEST_COMMIT=$(git rev-parse --short HEAD)
-            # Build for multiple targets (inline from create-deb.sh)
-            TARGETS=("GENERIC_ARM" "ANDROID" "RPI4ARM64")
-            for TARGET in "${TARGETS[@]}"; do
-              mkdir -p build_$TARGET
-              cd build_$TARGET
-              cmake .. -D${TARGET}=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo
-              make -j$(nproc)
-              # Create .deb with checkinstall
-              TIMESTAMP=$(date +%Y%m%dT%H%M%S)
-              VERSION="0.3.7+${TIMESTAMP}.${LATEST_COMMIT}"
-              checkinstall -D --pkgname=box64-${TARGET,,} --pkgversion=$VERSION --pkgarch=arm64 --maintainer="Pi-Apps-Coders" --provides=box64 --conflicts=box64 make install
-              mv *.deb /github/workspace/debian/
-              cd ..
-            done
-            # Cleanup: Keep only last 4 .debs per target
-            for TARGET in "${TARGETS[@]}"; do
-              ls -t /github/workspace/debian/box64-${TARGET,,}*.deb | tail -n +5 | xargs rm -f || true
-            done
-            # Mark success (to avoid commit if no changes, but since we cleared, always commit)
-            touch /github/workspace/exited_successfully.txt
+      # Install dependencies and build latest release
+      - name: Install dependencies and build
+        run: |
+          set -e
+          # Install build dependencies
+          sudo apt-get update
+          sudo apt-get install -y cmake git checkinstall binutils build-essential curl jq python3
+          # Configure git
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          # Get latest release tag from upstream
+          LATEST_RELEASE=$(curl -s https://api.github.com/repos/ptitSeb/box64/releases/latest | jq -r '.tag_name')
+          if [ -z "$LATEST_RELEASE" ]; then
+            echo "No release found, exiting"
+            exit 1
+          fi
+          # Check if release is new
+          RELEASE_FILE="$GITHUB_WORKSPACE/last_release.txt"
+          if [ -f "$RELEASE_FILE" ] && [ "$(cat $RELEASE_FILE)" == "$LATEST_RELEASE" ]; then
+            echo "No new release, skipping build"
+            touch $GITHUB_WORKSPACE/exited_successfully.txt
+            exit 0
+          fi
+          echo "$LATEST_RELEASE" > $RELEASE_FILE
+          # Clone box64 at the release tag
+          cd $GITHUB_WORKSPACE
+          git clone --branch $LATEST_RELEASE --depth 1 https://github.com/ptitSeb/box64.git box64-src
+          cd box64-src
+          # Build for one target (RPI5ARM64)
+          TARGET="RPI5ARM64"
+          mkdir -p build_$TARGET
+          cd build_$TARGET
+          cmake .. -D${TARGET}=1 -DARM_DYNAREC=ON -DBOX32=ON -DBOX32_BINFMT=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          make -j$(nproc)
+          # Create .deb with checkinstall
+          VERSION="${LATEST_RELEASE}"
+          sudo checkinstall -D --pkgname=box64-${TARGET,,} --pkgversion=$VERSION --pkgarch=arm64 --maintainer="atoll6" --provides=box64 --conflicts=box64 make install
+          mv *.deb $GITHUB_WORKSPACE/debian/
+          # Mark success
+          touch $GITHUB_WORKSPACE/exited_successfully.txt
 
       # Update Debian Repository (rebuild metadata)
       - name: Update Debian Repository
         run: |
-          # List GPG keys
-          gpg -K
-          # Rebuild debian repo
           cd $GITHUB_WORKSPACE/debian
-          rm -f $GITHUB_WORKSPACE/debian/Packages $GITHUB_WORKSPACE/debian/Packages.gz $GITHUB_WORKSPACE/debian/Release $GITHUB_WORKSPACE/debian/Release.gpg $GITHUB_WORKSPACE/debian/InRelease
+          rm -f Packages Packages.gz Release Release.gpg InRelease
           dpkg-scanpackages --multiversion . > Packages
           gzip -k -f Packages
           apt-ftparchive release . > Release
@@ -86,12 +85,9 @@ jobs:
       # Upload (commit and push changes)
       - name: Upload
         run: |
-          if [[ -f exited_successfully.txt ]]; then
-            rm exited_successfully.txt
-            exit 0
-          fi
           cd $GITHUB_WORKSPACE
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          bash -c "git add . && git commit -m 'Update box64 to latest commit'" || true
+          git add .
+          git commit -m "Update box64 to latest release" || true
           git push
