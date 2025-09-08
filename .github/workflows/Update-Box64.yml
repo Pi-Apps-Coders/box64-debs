@@ -2,6 +2,8 @@ name: Update-box64
 
 # Controls when the workflow will run
 on:
+  push:
+    branches: [ master ]
   schedule:
      - cron: '0 1 * * *'
   # Allows running this workflow manually from the Actions tab
@@ -11,7 +13,7 @@ on:
 jobs:
   update-box64:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
