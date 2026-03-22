@@ -27,7 +27,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
       
       - name: Install dependencies and build in dockerfile
-        uses: docker://arm64v8/ubuntu:18.04
+        uses: docker://zhongruoyu/gcc-ports:13-bionic
         with:
           entrypoint: "/bin/bash"
           args: /github/workspace/.github/workflows/install-dependencies-and-build.sh
