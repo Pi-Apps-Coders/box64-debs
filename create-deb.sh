@@ -51,6 +51,8 @@ for target in ${targets[@]}; do
     cmake .. -DBAD_SIGNAL=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
   elif [[ $target == "GENERIC_ARM" ]]; then
     cmake .. -DARM64=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
+  elif [[ $target == "TEGRAX1" ]]; then
+    cmake .. -D$target=1 -DBOX32=ON -DBOX32_BINFMT=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
   else
     cmake .. -D$target=1 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc-8 -DARM_DYNAREC=ON || error "Failed to run cmake."
   fi
