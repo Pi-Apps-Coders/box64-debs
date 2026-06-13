@@ -4,7 +4,7 @@ apt update
 apt install -y software-properties-common lsb-release \
 sudo wget curl build-essential jq autoconf automake \
 pkg-config ca-certificates rpm apt-utils \
-python3 make gettext pinentry-tty devscripts dpkg-dev \
+python3 python3.7 make gettext pinentry-tty devscripts dpkg-dev \
 gcc-8 g++-8
 # install new enough git to run actions/checkout
 sudo add-apt-repository ppa:git-core/ppa -y
